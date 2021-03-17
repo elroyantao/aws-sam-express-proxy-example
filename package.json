@@ -1,0 +1,24 @@
+{
+  "name": "aws-sam-express-proxy-example",
+  "version": "1.0.0",
+  "description": "A project to test how to setup a lambda proxy api using express with aws sam",
+  "main": "app.local.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/app.local.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elroyantao/aws-sam-express-proxy-example.git"
+  },
+  "author": "Elroy Antao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elroyantao/aws-sam-express-proxy-example/issues"
+  },
+  "homepage": "https://github.com/elroyantao/aws-sam-express-proxy-example#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

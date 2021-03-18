@@ -1,4 +1,4 @@
-name: SAM deploy local
+name: SAM deploy
 on:
   push:
     branches:
@@ -60,7 +60,7 @@ jobs:
       - name: SAM Validate
         run: sam validate
       - name: SAM Build
-        run: sam build
+        run: yarn build
       - name: Setup Bucket
         run: yarn setup-bucket
       - name: SAM Deploy

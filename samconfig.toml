@@ -1,0 +1,15 @@
+version=0.1
+[default.deploy.parameters]
+stack_name = "aws-sam-express-proxy-example-local"
+s3_prefix = "aws-sam-express-proxy-example/local"
+capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
+confirm_changeset = true
+
+[dev.deploy.parameters]
+s3_prefix = "aws-sam-express-proxy-example/dev"
+
+[stage.deploy.parameters]
+s3_prefix = "aws-sam-express-proxy-example/stage"
+
+[prod.deploy.parameters]
+s3_prefix = "aws-sam-express-proxy-example/local"

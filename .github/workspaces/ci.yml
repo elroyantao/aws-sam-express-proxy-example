@@ -1,0 +1,67 @@
+name: SAM deploy local
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "Yes" to deploy prod'     
+        required: true
+        default: 'No'
+
+jobs:
+  select-deploy-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ env.environment }}
+    steps: 
+      - name: Set environment prod
+        id: set-env-prod
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'Yes' && github.ref == 'refs/heads/master'
+        run: echo "environment=prod" >> $GITHUB_ENV
+      - name: Set environment staging
+        id: set-env-stage
+        if: github.event_name == 'push'
+        run: echo "environment=stage" >> $GITHUB_ENV
+      - name: Set environment dev
+        id: set-env-dev
+        if: github.event_name == 'pull_request'
+        run: echo "environment=dev" >> $GITHUB_ENV
+      - name: Display deploy environment
+        run: echo "Environment to deploy -----${{ env.environment }}-----"
+
+  sam-validate-build-test-deploy:
+    needs: select-deploy-environment
+    name: deploy-${{ needs.select-deploy-environment.outputs.environment }}
+    runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'Yes' && github.ref == 'refs/heads/master') ||
+      github.event_name == 'pull_request' ||
+      github.event_name == 'push'
+    env:
+      environment: ${{ needs.select-deploy-environment.outputs.environment }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Install dependencies
+        run: yarn
+      - name: Configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: SAM Validate
+        run: sam validate
+      - name: SAM Build
+        run: sam build
+      - name: Setup Bucket
+        run: yarn setup-bucket
+      - name: SAM Deploy
+        run: yarn deploy --config-env ${{ env.environment }}

@@ -8,11 +8,14 @@ confirm_changeset = true
 [dev.deploy.parameters]
 s3_prefix = "aws-sam-express-proxy-example/dev"
 stack_name = "aws-sam-express-proxy-example-dev"
+capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
 
 [stage.deploy.parameters]
 s3_prefix = "aws-sam-express-proxy-example/stage"
 stack_name = "aws-sam-express-proxy-example-stage"
+capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
 
 [prod.deploy.parameters]
 s3_prefix = "aws-sam-express-proxy-example/local"
 stack_name = "aws-sam-express-proxy-example-prod"
+capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"

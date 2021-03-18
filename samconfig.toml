@@ -3,19 +3,23 @@ version=0.1
 stack_name = "aws-sam-express-proxy-example-local"
 s3_prefix = "aws-sam-express-proxy-example/local"
 capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
+parameter_overrides = "Environment=\"local\""
 confirm_changeset = true
 
 [dev.deploy.parameters]
 s3_prefix = "aws-sam-express-proxy-example/dev"
 stack_name = "aws-sam-express-proxy-example-dev"
 capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
+parameter_overrides = "Environment=\"dev\""
 
 [stage.deploy.parameters]
 s3_prefix = "aws-sam-express-proxy-example/stage"
 stack_name = "aws-sam-express-proxy-example-stage"
 capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
+parameter_overrides = "Environment=\"stage\""
 
 [prod.deploy.parameters]
 s3_prefix = "aws-sam-express-proxy-example/local"
 stack_name = "aws-sam-express-proxy-example-prod"
 capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM"
+parameter_overrides = "Environment=\"prod\""

@@ -3,9 +3,18 @@
   "version": "1.0.0",
   "description": "A project to test how to setup a lambda proxy api using express with aws sam",
   "main": "app.local.js",
-  "type": "module",
+  "config": {
+    "deployBucket": "sam-deploy-bucket-elroy-1703",
+    "region": "us-east-1"
+  },
   "scripts": {
     "start": "node src/app.local.js",
+    "create-bucket": "cross-var aws s3 mb s3://$npm_package_config_deployBucket",
+    "check-bucket": "cross-var aws s3api get-bucket-location --bucket $npm_package_config_deployBucket",
+    "setup-bucket": "npm run check-bucket || npm run create-bucket",
+    "validate": "sam validate --template-file sam-template.yml",
+    "build": "sam build --template-file sam-template.yml",
+    "deploy": "sam deploy --s3-bucket $npm_package_config_deployBucket",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +28,10 @@
   },
   "homepage": "https://github.com/elroyantao/aws-sam-express-proxy-example#readme",
   "dependencies": {
+    "@vendia/serverless-express": "^4.3.4",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "cross-var": "^1.1.0"
   }
 }

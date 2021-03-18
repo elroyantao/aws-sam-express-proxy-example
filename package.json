@@ -12,6 +12,7 @@
     "create-bucket": "cross-var aws s3 mb s3://$npm_package_config_deployBucket",
     "check-bucket": "cross-var aws s3api get-bucket-location --bucket $npm_package_config_deployBucket",
     "setup-bucket": "npm run check-bucket || npm run create-bucket",
+    "validate": "sam validate --template-file sam-template.yml",
     "build": "sam build --template-file sam-template.yml",
     "deploy": "sam deploy --s3-bucket $npm_package_config_deployBucket",
     "test": "echo \"Error: no test specified\" && exit 1"

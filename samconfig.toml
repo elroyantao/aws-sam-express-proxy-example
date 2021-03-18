@@ -7,9 +7,12 @@ confirm_changeset = true
 
 [dev.deploy.parameters]
 s3_prefix = "aws-sam-express-proxy-example/dev"
+stack_name = "aws-sam-express-proxy-example-dev"
 
 [stage.deploy.parameters]
 s3_prefix = "aws-sam-express-proxy-example/stage"
+stack_name = "aws-sam-express-proxy-example-stage"
 
 [prod.deploy.parameters]
 s3_prefix = "aws-sam-express-proxy-example/local"
+stack_name = "aws-sam-express-proxy-example-prod"
